@@ -2,22 +2,15 @@ const { ValidationError } = require('sequelize');
 const Controller = require('./controller');
 const models = require('../models');
 
-
-let index = 1;
-const examples = [
-  { id: index++, title: 'テスト1', body: 'テスト1' },
-  { id: index++, title: 'テスト2', body: 'テスト2' },
-];
-
 class TeamsController extends Controller {
   // GET /
   async index(req, res) {
-    res.render('teams/index', { examples: examples });
+    res.render('teams/index');
   }
 
   // GET /creat    
   async create(req, res) {
-    res.render('teams/create', { example: { title: '', body: '' } });
+    res.render('teams/create');
   }
 
   // POST /
@@ -32,8 +25,8 @@ class TeamsController extends Controller {
       await req.flash('info', '保存しました');
       res.redirect(`/teams/${team.id}`);
     } catch (err) {
-      if(err instanceof ValidationError){
-        res.render('teams/create', { team, err: err });
+      if(err instanceof ValidationError){　//err：実際のエラー内容
+        res.render('teams/create', { err: err });
       } else {
         throw err;
       }
@@ -43,7 +36,8 @@ class TeamsController extends Controller {
 // GET /:id
   async show(req, res) {
     const team = await this._team(req);
-    res.render('teams/show', { team });
+    const tasks = await team.getTeamTask({order : [['id', 'ASC']]});
+    res.render('teams/show', { team , tasks });
   }
 
   // GET /:id/edit
@@ -84,6 +78,15 @@ class TeamsController extends Controller {
       throw new Error('User not find');
     }
     return team;
+    
+  }
+  async _task(req) {
+    console.log(req.params.task)
+    const task = await models.Task.findAll(req.params.task);
+    if (!task) {
+      throw new Error('User not find');
+    }
+    return task;
   }
 
 }

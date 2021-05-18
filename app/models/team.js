@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       this.Team = this.hasMany(_models.Task,{
         foreignKey: 'teamId',
-        as: 'TeamTask'
+        as: 'teamTask'
       });
     }
   };

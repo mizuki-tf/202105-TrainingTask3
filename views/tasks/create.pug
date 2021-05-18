@@ -1,0 +1,16 @@
+extends ../layout
+
+block content 
+  h1 タスクの新規作成
+
+  form.box(action=`/teams/${team.id}/tasks`, method="post")
+    _csrf
+    
+    div
+      label(for="title") タイトル
+      input#title(name="title")
+    div  
+      label(for="body") 内容
+      textarea#body(name="body")
+    div.actions
+      input(type="submit")

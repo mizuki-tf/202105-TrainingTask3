@@ -12,8 +12,10 @@ route.get('/', function (req, res, _next) {
 // single style
 route.get('/user/edit', forceLogin, 'users_controller@edit');
 route.put('/user', forceLogin, 'users_controller@update');
-//route.post('/teams', forceLogin, 'controller@store');
 
+// /teams/:team/tasksのURL階層の作成。子ルート
+const teamRoute = route.sub('/teams/:team', forceLogin);
+teamRoute.resource('tasks', {controller: 'tasks_controller', only: ['create','store','edit','update']});
 
 // resource style
 route.resource('examples', 'examples_controller');
