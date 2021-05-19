@@ -25,7 +25,7 @@ class TeamsController extends Controller {
       await req.flash('info', '保存しました');
       res.redirect(`/teams/${team.id}`);
     } catch (err) {
-      if (err instanceof ValidationError) {　
+      if (err instanceof ValidationError) {
         res.render('teams/create', { err: err });
       } else {
         throw err;
@@ -72,7 +72,7 @@ class TeamsController extends Controller {
   }
 
   async _team(req) {
-    console.log(req.params.team)
+    console.log(req.params.team);
     const team = await models.Team.findByPk(req.params.team);
     if (!team) {
       throw new Error('User not find');
@@ -81,7 +81,7 @@ class TeamsController extends Controller {
     
   }
   async _task(req) {
-    console.log(req.params.task)
+    console.log(req.params.task);
     const task = await models.Task.findAll(req.params.task);
     if (!task) {
       throw new Error('User not find');
