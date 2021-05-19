@@ -25,7 +25,7 @@ class TeamsController extends Controller {
       await req.flash('info', '保存しました');
       res.redirect(`/teams/${team.id}`);
     } catch (err) {
-      if(err instanceof ValidationError){　//err：実際のエラー内容
+      if (err instanceof ValidationError) {　
         res.render('teams/create', { err: err });
       } else {
         throw err;
@@ -33,7 +33,7 @@ class TeamsController extends Controller {
     }
   }
 
-// GET /:id
+  // GET /:id
   async show(req, res) {
     const team = await this._team(req);
     const tasks = await team.getTeamTask({ order : [['id', 'ASC']] });
@@ -51,14 +51,14 @@ class TeamsController extends Controller {
     const team = await this._team(req);
     try {
       await models.Team.update(
-        {name: req.body.name},
-        {where: { id: team.id }}
+        { name: req.body.name },
+        { where: { id: team.id } }
       );
       await req.flash('info', '更新しました');
       res.redirect(`/teams/${req.params.team}/edit`);
     } catch (err) {
       if (err instanceof ValidationError) {
-        res.render(`/teams/${req.params.team}/edit`, { team, err });
+        res.render(`/teams/${req.params.team}/edit`, { err: err });
       } else {
         throw err;
       }

@@ -43,10 +43,9 @@ class TasksController extends Controller {
       await models.Task.update({
         title: req.body.title,
         body: req.body.body
-        },
-        {
-          where: { id: task.id }
-        });
+      }, { 
+        where: { id: task.id }
+      });
       await req.flash('info', '更新しました');
       res.redirect(`/teams/${req.params.team}`);
     } catch (err) {
