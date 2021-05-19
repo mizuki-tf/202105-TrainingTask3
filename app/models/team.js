@@ -11,19 +11,17 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      this.User = this.belongsTo(models.User,{
+      this.User = this.belongsTo(models.User, {
         foreignKey: 'ownerId',
         as: 'Owner'
       });
-    }
-    static associate(_models) {
-      // define association here
-      this.Team = this.hasMany(_models.Task,{
+
+      this.Team = this.hasMany(models.Task, {
         foreignKey: 'teamId',
         as: 'TeamTask'
       });
     }
-  };
+  }
   Team.init({
     name: DataTypes.STRING,
     ownerId: DataTypes.INTEGER

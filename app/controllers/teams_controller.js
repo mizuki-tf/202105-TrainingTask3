@@ -58,7 +58,7 @@ class TeamsController extends Controller {
     try {
       await models.Team.update(
         { name: req.body.name },
-        { where: { id: team.id }}
+        { where: { id: team.id } }
       );
       await req.flash('info', '更新しました');
       res.redirect(`/teams/${req.params.team}/edit`);
@@ -78,7 +78,7 @@ class TeamsController extends Controller {
   }
 
   async _team(req) {
-    console.log(req.params.team)
+    console.log(req.params.team);
     const team = await models.Team.findByPk(req.params.team);
     if (!team) {
       throw new Error('User not find');
