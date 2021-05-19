@@ -24,7 +24,7 @@ class TeamsController extends Controller {
   async store(req, res) {
     //console.log(req.user);
     try {
-      console.log("チーム名"+JSON.stringify(req.body.name)); 
+      //console.log("チーム名"+JSON.stringify(req.body.name)); 
       const team = await models.Team.create({
         name: req.body.name,
         ownerId: req.user.id
@@ -33,14 +33,14 @@ class TeamsController extends Controller {
       res.redirect(`/teams/${team.id}`);
     } catch (err) {
       if(err instanceof ValidationError){
-        res.render('teams/create', { team, err: err });
+        res.render('teams/create', { err });
       } else {
         throw err;
       }
-   }
+    } 
   }
 
-// GET /:id
+  // GET /:id
   async show(req, res) {
     const team = await this._team(req);
     res.render('teams/show', { team });
@@ -57,8 +57,8 @@ class TeamsController extends Controller {
     const team = await this._team(req);
     try {
       await models.Team.update(
-        {name: req.body.name},
-        {where: {id: team.id}}
+        { name: req.body.name },
+        { where: { id: team.id }}
       );
       await req.flash('info', '更新しました');
       res.redirect(`/teams/${req.params.team}/edit`);
