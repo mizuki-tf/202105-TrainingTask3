@@ -17,7 +17,7 @@ class TeamsController extends Controller {
   async store(req, res) {
     //console.log(req.user);
     try {
-      console.log("チーム名"+JSON.stringify(req.body.name)); 
+      //console.log("チーム名"+JSON.stringify(req.body.name)); 
       const team = await models.Team.create({
         name: req.body.name,
         ownerId: req.user.id
@@ -30,14 +30,14 @@ class TeamsController extends Controller {
       } else {
         throw err;
       }
-   }
+    }
   }
 
 // GET /:id
   async show(req, res) {
     const team = await this._team(req);
-    const tasks = await team.getTeamTask({order : [['id', 'ASC']]});
-    res.render('teams/show', { team , tasks });
+    const tasks = await team.getTeamTask({ order : [['id', 'ASC']] });
+    res.render('teams/show', { team, tasks });
   }
 
   // GET /:id/edit
@@ -52,7 +52,7 @@ class TeamsController extends Controller {
     try {
       await models.Team.update(
         {name: req.body.name},
-        {where: {id: team.id}}
+        {where: { id: team.id }}
       );
       await req.flash('info', '更新しました');
       res.redirect(`/teams/${req.params.team}/edit`);
