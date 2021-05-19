@@ -1,6 +1,7 @@
 const { ValidationError } = require('sequelize');
 const Controller = require('./controller');
 const models = require('../models');
+const moment = require('moment-timezone');
 
 class TeamsController extends Controller {
   // GET /
@@ -16,8 +17,7 @@ class TeamsController extends Controller {
   // POST /
   async store(req, res) {
     //console.log(req.user);
-    try {
-      console.log("チーム名"+JSON.stringify(req.body.name)); 
+    try { 
       const team = await models.Team.create({
         name: req.body.name,
         ownerId: req.user.id
@@ -37,7 +37,10 @@ class TeamsController extends Controller {
   async show(req, res) {
     const team = await this._team(req);
     const tasks = await team.getTeamTask({order : [['id', 'ASC']]});
-    res.render('teams/show', { team , tasks });
+    await tasks.forEach((task) => {
+      task.formattedCreatedAt = moment(task.updatedAt).tz('Asia/Tokyo').format('YYYY/MM/DD HH:mm');
+    });
+    res.render('teams/show', { team, tasks });
   }
 
   // GET /:id/edit
@@ -72,7 +75,7 @@ class TeamsController extends Controller {
   }
 
   async _team(req) {
-    console.log(req.params.team)
+    //console.log(req.params.team)
     const team = await models.Team.findByPk(req.params.team);
     if (!team) {
       throw new Error('User not find');
@@ -81,7 +84,7 @@ class TeamsController extends Controller {
     
   }
   async _task(req) {
-    console.log(req.params.task)
+    //console.log(req.params.task)
     const task = await models.Task.findAll(req.params.task);
     if (!task) {
       throw new Error('User not find');
