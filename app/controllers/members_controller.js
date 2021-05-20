@@ -29,7 +29,7 @@ class MembersController extends Controller {
     const team = await this._team(req);
     //チームに結びついたメンバーを持ってくる
     const members = await team.getTeamMem({ include: 'userInfo', order: [['id', 'ASC']] });
-    //console.log(users);
+    console.log(JSON.stringify(members));
     res.render('members/index', { users, team, members });
   }
 
