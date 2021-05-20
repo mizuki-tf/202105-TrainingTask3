@@ -1,11 +1,7 @@
 const { ValidationError } = require('sequelize');
 const Controller = require('./controller');
-<<<<<<< HEAD
 const models = require('../models');
 const moment = require('moment-timezone');
-=======
-const models = require("../models");
->>>>>>> master
 
 class TeamsController extends Controller {
 
