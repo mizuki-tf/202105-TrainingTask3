@@ -6,7 +6,7 @@ const route = new Route();
 
 // function style
 route.get('/', function (req, res, _next) {
-  res.render('index', { title: 'Express', user: req.user });
+  res.render('index');
 });
 
 // single style
@@ -15,9 +15,13 @@ route.put('/user', forceLogin, 'users_controller@update');
 
 // resource style
 route.resource('examples', 'examples_controller');
+// teamsのルート設定
+route.resource('teams', { controller: 'teams_controller', only: ['create', 'store', 'show', 'edit', 'update'] });
 
 // /adminのURL階層の作成。ログインチェック、管理者チェックが有効。
 const adminRoute = route.sub('/admin', forceLogin, forceAdmin);
 adminRoute.resource('users', 'admin/users_controller');
+
+
 
 module.exports = route.router;
