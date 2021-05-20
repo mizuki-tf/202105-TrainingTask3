@@ -31,9 +31,10 @@ class TasksController extends Controller {
 
   // GET /:id/edit
   async edit(req, res) {
-    const task = await this._task(req);
-    const team = await task.getTask();
-    res.render('tasks/edit', { team, task });
+    const team = await this._team(req);
+    //チームに結びついたタスクの内、urlの:taskのIdを使って一つのタスクに絞り込む
+    const tasks = await team.getTeamTask({ where: { id: req.params.task } });
+    res.render('tasks/edit', { team, task: tasks[0] });
   }
 
   // PUT or PATCH /:id
@@ -50,7 +51,7 @@ class TasksController extends Controller {
       res.redirect(`/teams/${req.params.team}`);
     } catch (err) {
       if (err instanceof ValidationError) {
-        res.render(`/teams/${req.params.team}/edit`, { err: err });
+        res.render(`/teams/${req.params.team}/${task.id}/edit`, { err: err });
       } else {
         throw err;
       }
@@ -59,7 +60,6 @@ class TasksController extends Controller {
 
   async _team(req) {
     const team = await models.Team.findByPk(req.params.team);
-    console.log(team);
     if (!team) {
       throw new Error('User not find');
     }
@@ -68,7 +68,6 @@ class TasksController extends Controller {
   }
 
   async _task(req) {
-    console.log(req.params.task);
     const task = await models.Task.findByPk(req.params.task);
     if (!task) {
       throw new Error('User not find');
