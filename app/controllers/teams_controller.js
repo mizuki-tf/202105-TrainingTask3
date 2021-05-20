@@ -1,7 +1,11 @@
 const { ValidationError } = require('sequelize');
 const Controller = require('./controller');
+<<<<<<< HEAD
 const models = require('../models');
 const moment = require('moment-timezone');
+=======
+const models = require("../models");
+>>>>>>> master
 
 class TeamsController extends Controller {
 
@@ -12,8 +16,7 @@ class TeamsController extends Controller {
 
   // POST /
   async store(req, res) {
-    //console.log(req.user);
-    try { 
+    try {
       const team = await models.Team.create({
         name: req.body.name,
         ownerId: req.user.id
@@ -21,15 +24,15 @@ class TeamsController extends Controller {
       await req.flash('info', '保存しました');
       res.redirect(`/teams/${team.id}`);
     } catch (err) {
-      if(err instanceof ValidationError){　//err：実際のエラー内容
-        res.render('teams/create', { err: err });
+      if(err instanceof ValidationError){
+        res.render('teams/create', { err });
       } else {
         throw err;
       }
-   }
+    } 
   }
 
-// GET /:id
+  // GET /:id
   async show(req, res) {
     const team = await this._team(req);
     const tasks = await team.getTeamTask({ order : [['id', 'ASC']] });
@@ -64,14 +67,12 @@ class TeamsController extends Controller {
     }
   }
 
-  // DELETE /:id
-  async destroy(req, res) {
-    await req.flash('info', '削除しました（未実装）');
-    res.redirect('/examples/');
-  }
-
   async _team(req) {
+<<<<<<< HEAD
     //console.log(req.params.team)
+=======
+    console.log(req.params.team);
+>>>>>>> master
     const team = await models.Team.findByPk(req.params.team);
     if (!team) {
       throw new Error('User not find');
