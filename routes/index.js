@@ -5,19 +5,18 @@ const forceAdmin = require('../app/middlewares/force_admin');
 const route = new Route();
 
 // function style
-route.get('/', function (req, res, _next) {
-  res.render('teams/index', { title: 'Express', user: req.user });
+route.get('/', function (req, res, next) {
+  res.render('index');
 });
 
 // single style
 route.get('/user/edit', forceLogin, 'users_controller@edit');
 route.put('/user', forceLogin, 'users_controller@update');
-//route.post('/teams', forceLogin, 'controller@store');
-
 
 // resource style
 route.resource('examples', 'examples_controller');
-route.resource('teams', 'teams_controller');
+// teamsのルート設定
+route.resource('teams', { controller: 'teams_controller', only: ['create', 'store', 'show', 'edit', 'update'] });
 
 // /adminのURL階層の作成。ログインチェック、管理者チェックが有効。
 const adminRoute = route.sub('/admin', forceLogin, forceAdmin);

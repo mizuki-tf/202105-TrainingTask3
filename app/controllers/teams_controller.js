@@ -2,21 +2,15 @@ const { ValidationError } = require('sequelize');
 const Controller = require('./controller');
 
 class TeamsController extends Controller {
-  // GET /
-  async index(req, res) {
-    res.render('teams/index', { examples: examples });
-  }
 
   // GET /creat    
   async create(req, res) {
-    res.render('teams/create', { example: { title: '', body: '' } });
+    res.render('teams/create');
   }
 
   // POST /
   async store(req, res) {
-    //console.log(req.user);
     try {
-      //console.log("チーム名"+JSON.stringify(req.body.name)); 
       const team = await models.Team.create({
         name: req.body.name,
         ownerId: req.user.id
@@ -56,17 +50,11 @@ class TeamsController extends Controller {
       res.redirect(`/teams/${req.params.team}/edit`);
     } catch (err) {
       if (err instanceof ValidationError) {
-        res.render(`/teams/${req.params.team}/edit`, { team, err });
+        res.render(`/teams/${req.params.team}/edit`, { err });
       } else {
         throw err;
       }
     }
-  }
-
-  // DELETE /:id
-  async destroy(req, res) {
-    await req.flash('info', '削除しました（未実装）');
-    res.redirect('/examples/');
   }
 
   async _team(req) {
