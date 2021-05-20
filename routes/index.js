@@ -5,7 +5,7 @@ const forceAdmin = require('../app/middlewares/force_admin');
 const route = new Route();
 
 // function style
-route.get('/', function (req, res, next) {
+route.get('/', function (req, res, _next) {
   res.render('index');
 });
 
