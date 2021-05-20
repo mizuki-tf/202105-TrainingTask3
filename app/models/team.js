@@ -15,7 +15,6 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'ownerId',
         as: 'owner'
       });
-
       this.TeamTask = this.hasMany(models.Task, {
         foreignKey: 'teamId',
         as: 'teamTask'
