@@ -28,7 +28,7 @@ class MembersController extends Controller {
     const users = await models.User.findAll({ order: [['id', 'ASC']] });
     const team = await this._team(req);
     //チームに結びついたメンバーを持ってくる
-    const members = await team.getTeamMem({ include: 'user', order: [['id', 'ASC']] });
+    const members = await team.getTeamMem({ include: 'userInfo', order: [['id', 'ASC']] });
     //console.log(users);
     res.render('members/index', { users, team, members });
   }

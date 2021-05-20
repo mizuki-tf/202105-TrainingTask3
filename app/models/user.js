@@ -11,13 +11,13 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      this.User = this.hasMany(models.Member,{
+      this.Members = this.hasMany(models.Member,{
         foreignKey: 'userId',
         as: 'members'
       })
-      this.User = this.hasMany(models.Team,{
+      this.OwnTeams = this.hasMany(models.Team,{
         foreignKey: 'ownerId',
-        as: 'OwnTeams'
+        as: 'ownTeams'
       })
     }
 
