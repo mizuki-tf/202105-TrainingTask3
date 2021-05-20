@@ -36,7 +36,7 @@ class TeamsController extends Controller {
 // GET /:id
   async show(req, res) {
     const team = await this._team(req);
-    const tasks = await team.getTeamTask({order : [['id', 'ASC']]});
+    const tasks = await team.getTeamTask({ order : [['id', 'ASC']] });
     await tasks.forEach((task) => {
       task.formattedCreatedAt = moment(task.updatedAt).tz('Asia/Tokyo').format('YYYY/MM/DD HH:mm');
     });
@@ -54,14 +54,14 @@ class TeamsController extends Controller {
     const team = await this._team(req);
     try {
       await models.Team.update(
-        {name: req.body.name},
-        {where: {id: team.id}}
+        { name: req.body.name },
+        { where: { id: team.id } }
       );
       await req.flash('info', '更新しました');
       res.redirect(`/teams/${req.params.team}/edit`);
     } catch (err) {
       if (err instanceof ValidationError) {
-        res.render(`/teams/${req.params.team}/edit`, { team, err });
+        res.render(`/teams/${req.params.team}/edit`, { err });
       } else {
         throw err;
       }
