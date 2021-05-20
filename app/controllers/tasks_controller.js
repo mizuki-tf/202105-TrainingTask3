@@ -22,11 +22,11 @@ class TasksController extends Controller {
       res.redirect(`/teams/${team.id}`);
     } catch (err) {
       if(err instanceof ValidationError){
-        res.render('tasks/create',{ err: err });
+        res.render('tasks/create', { err: err });
       } else {
         throw err;
       }
-   }
+    }
   }
 
   // GET /:id/edit
@@ -44,14 +44,14 @@ class TasksController extends Controller {
       await models.Task.update({
         title: req.body.title,
         body: req.body.body
-        },{
-        where: {id: task.id}
+      }, {
+        where: { id: task.id }
       });
       await req.flash('info', '更新しました');
       res.redirect(`/teams/${req.params.team}`);
     } catch (err) {
       if (err instanceof ValidationError) {
-        res.render(`/teams/${req.params.team}/edit`, { team, err });
+        res.render(`/teams/${req.params.team}/edit`, { err });
       } else {
         throw err;
       }

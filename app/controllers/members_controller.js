@@ -7,19 +7,19 @@ class MembersController extends Controller {
   // POST /:id/members
   async store(req, res) {
     try {
-      const member = await models.Member.create({
+      await models.Member.create({
         teamId: req.params.team,
         userId: req.body.userId
       });
       await req.flash('info', '保存しました');
       res.redirect(`/teams/${req.params.team}/members`);
     } catch (err) {
-      if(err instanceof ValidationError){　
+      if (err instanceof ValidationError) {　
         res.render('teams/create', { err: err });
       } else {
         throw err;
       }
-   }
+    }
   }
 
   // GET /:id/members
