@@ -13,9 +13,13 @@ route.get('/', function (req, res, _next) {
 route.get('/user/edit', forceLogin, 'users_controller@edit');
 route.put('/user', forceLogin, 'users_controller@update');
 
+// /teams/:team/tasksのURL階層の作成。子ルート
+const teamRoute = route.sub('/teams/:team', forceLogin);
+teamRoute.resource('tasks', { controller: 'tasks_controller', only: ['create', 'store', 'edit', 'update'] });
+
 // resource style
 route.resource('examples', 'examples_controller');
-// teamsのルート設定
+//teamsのルート設定
 route.resource('teams', { controller: 'teams_controller', only: ['create', 'store', 'show', 'edit', 'update'] });
 
 // /adminのURL階層の作成。ログインチェック、管理者チェックが有効。
