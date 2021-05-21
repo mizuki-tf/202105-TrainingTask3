@@ -6,7 +6,7 @@ class TasksController extends Controller {
   // GET /creat
   async create(req, res) {
     const team = await this._team(req);
-    const members = await team.getTeamMem({ include: 'userInfo', order: [['id', 'ASC']] });
+    const members = await team.getMember({ include: 'userInfo', order: [['id', 'ASC']] });
     res.render('manager/tasks/create', { team, members });
   }
 
@@ -38,7 +38,7 @@ class TasksController extends Controller {
     const team = await this._team(req);
     //チームに結びついたタスクの内、urlの:taskのIdを使って一つのタスクに絞り込む
     const tasks = await team.getTeamTask({ where: { id: req.params.task } });
-    const members = await team.getTeamMem({ include: 'userInfo', order: [['id', 'ASC']] });
+    const members = await team.getMember({ include: 'userInfo', order: [['id', 'ASC']] });
     res.render('manager/tasks/edit', { team, task: tasks[0], members });
   }
 

@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       this.Team = this.belongsTo(models.Team, {
         foreignKey: 'teamId',
-        as: 'task'
+        as: 'Team'
       });
     }
   }
@@ -21,6 +21,8 @@ module.exports = (sequelize, DataTypes) => {
     teamId: DataTypes.INTEGER,
     title: DataTypes.STRING,
     body: DataTypes.STRING,
+    creatorId: DataTypes.INTEGER,
+    assigneeId: DataTypes.INTEGER,
     status: DataTypes.INTEGER
   }, {
     sequelize,
