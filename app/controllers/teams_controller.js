@@ -69,7 +69,6 @@ class TeamsController extends Controller {
 
   }
   async _task(req) {
-    //console.log(req.params.task)
     const task = await models.Task.findAll(req.params.task);
     if (!task) {
       throw new Error('User not find');

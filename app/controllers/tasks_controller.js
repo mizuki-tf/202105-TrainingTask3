@@ -6,7 +6,7 @@ class TasksController extends Controller {
   // GET /creat
   async create(req, res) {
     const team = await this._team(req);
-    const members = await team.getTeamMem({ include: 'userInfo', order: [['id', 'ASC']] });
+    const members = await team.getMember({ include: 'userInfo', order: [['id', 'ASC']] });
     res.render('tasks/create', { team, members });
   }
 
@@ -25,11 +25,11 @@ class TasksController extends Controller {
       res.redirect(`/teams/${team.id}`);
     } catch (err) {
       if(err instanceof ValidationError){
-        res.render('tasks/create',{ err: err });
+        res.render('tasks/create', { err: err });
       } else {
         throw err;
       }
-   }
+    }
   }
 
   // GET /:id/edit
@@ -37,7 +37,7 @@ class TasksController extends Controller {
     const team = await this._team(req);
     //チームに結びついたタスクの内、urlの:taskのIdを使って一つのタスクに絞り込む
     const tasks = await team.getTeamTask({ where: { id: req.params.task } });
-    const members = await team.getTeamMem({ include: 'userInfo', order: [['id', 'ASC']] });
+    const members = await team.getMember({ include: 'userInfo', order: [['id', 'ASC']] });
     res.render('tasks/edit', { team, task: tasks[0], members });
   }
 
@@ -66,7 +66,6 @@ class TasksController extends Controller {
 
   async _team(req) {
     const team = await models.Team.findByPk(req.params.team);
-    //console.log(team);
     if (!team) {
       throw new Error('User not find');
     }
@@ -75,7 +74,6 @@ class TasksController extends Controller {
   }
 
   async _task(req) {
-    //console.log(req.params.task);
     const task = await models.Task.findByPk(req.params.task);
     if (!task) {
       throw new Error('User not find');
