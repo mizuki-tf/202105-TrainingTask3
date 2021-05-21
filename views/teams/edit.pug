@@ -6,7 +6,6 @@ block content
   form.box(action=`/teams/${team.id}`,method="post")
     _csrf
     _method put
-
     div
       label(for="title") チーム名
       input#title(name="name" value=team.name)

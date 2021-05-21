@@ -52,7 +52,7 @@ class TeamsController extends Controller {
       res.redirect(`/teams/${req.params.team}/edit`);
     } catch (err) {
       if (err instanceof ValidationError) {
-        res.render(`/teams/${req.params.team}/edit`, { err });
+        res.render(`/teams/${req.params.team}/edit`, { err: err });
       } else {
         throw err;
       }
@@ -69,7 +69,6 @@ class TeamsController extends Controller {
 
   }
   async _task(req) {
-    //console.log(req.params.task)
     const task = await models.Task.findAll(req.params.task);
     if (!task) {
       throw new Error('User not find');

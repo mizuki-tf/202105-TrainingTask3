@@ -3,7 +3,7 @@ const Controller = require('./controller');
 const models = require('../models');
 
 class TasksController extends Controller {
-  // GET /creat    
+  // GET /creat
   async create(req, res) {
     const team = await this._team(req);
     res.render('tasks/create', { team });
@@ -60,16 +60,14 @@ class TasksController extends Controller {
 
   async _team(req) {
     const team = await models.Team.findByPk(req.params.team);
-    //console.log(team);
     if (!team) {
       throw new Error('User not find');
     }
     return team;
-    
+
   }
 
   async _task(req) {
-    //console.log(req.params.task);
     const task = await models.Task.findByPk(req.params.task);
     if (!task) {
       throw new Error('User not find');
