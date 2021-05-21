@@ -5,7 +5,7 @@ block content
 
   form.box(action=`/manager/teams/${team.id}/tasks`, method="post")
     _csrf
-    div= team.id
+
     div
       label(for="title") タイトル
       input#title(name="title")
