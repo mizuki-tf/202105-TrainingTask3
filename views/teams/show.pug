@@ -1,6 +1,6 @@
 extends ../layout
 
-block content 
+block content
   h1= team.name
   a(href=`/teams/${team.id}/tasks/create`) 新規タスクの作成
   br
@@ -9,7 +9,7 @@ block content
   a(href=`/teams/${team.id}/edit`) 編集
   h2 タスク一覧
   table(border="1")
-    tbody 
+    tbody
       th タスクID
       th タイトル
       th 作成日時
@@ -18,8 +18,7 @@ block content
         tr
           td= task.id
           td= task.title
-          td= task.formattedCreatedAt
+          td= helpers.formatDateTime(task.createdAt)
           td
             a(href=`/teams/${team.id}/tasks/${task.id}/edit`) 編集
-  
-  
+
