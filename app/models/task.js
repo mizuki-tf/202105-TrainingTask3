@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
         as: 'dotaskTeam'
       });
     }
-  };
+  }
   Task.init({
     teamId: DataTypes.INTEGER,
     title: DataTypes.STRING,

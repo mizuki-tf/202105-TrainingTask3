@@ -14,15 +14,15 @@ module.exports = (sequelize, DataTypes) => {
       this.Owner = this.belongsTo(models.User, {
         foreignKey: 'ownerId',
         as: 'owner'
-      })
+      });
       this.TeamTask = this.hasMany(models.Task, {
         foreignKey: 'teamId',
         as: 'teamTask'
-      })
+      });
       this.TeamMem = this.hasMany(models.Member, {
         foreignKey: 'teamId',
         as: 'teamMem'
-      })
+      });
     }
   }
   Team.init({

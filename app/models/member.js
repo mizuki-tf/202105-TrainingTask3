@@ -14,13 +14,13 @@ module.exports = (sequelize, DataTypes) => {
       this.UserInfo = this.belongsTo(models.User, {
         foreignKey: 'userId',
         as: 'userInfo'
-      })
+      });
       this.TeamInfo = this.belongsTo(models.Team, {
         foreignKey: 'teamId',
         as: 'teamInfo'
-      })
+      });
     }
-  };
+  }
   Member.init({
     teamId: DataTypes.INTEGER,
     userId: DataTypes.INTEGER,
