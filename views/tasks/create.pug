@@ -1,16 +1,19 @@
 extends ../layout
 
-block content 
+block content
   h1 タスクの新規作成
 
   form.box(action=`/teams/${team.id}/tasks`, method="post")
     _csrf
-    
+
     div
       label(for="title") タイトル
       input#title(name="title")
-    div  
+    div
       label(for="body") 内容
       textarea#body(name="body")
+    select(name="userId") 担当者
+      each member in members
+        option(value=member.userInfo.id)= member.userInfo.displayName
     div.actions
       input(type="submit")

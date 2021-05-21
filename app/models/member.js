@@ -11,16 +11,16 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      this.User = this.belongsTo(models.User, {
+      this.UserInfo = this.belongsTo(models.User, {
         foreignKey: 'userId',
-        as: 'user'
-      })
-      this.Team = this.belongsTo(models.Team, {
+        as: 'userInfo'
+      });
+      this.TeamInfo = this.belongsTo(models.Team, {
         foreignKey: 'teamId',
-        as: 'team'
-      })
+        as: 'teamInfo'
+      });
     }
-  };
+  }
   Member.init({
     teamId: DataTypes.INTEGER,
     userId: DataTypes.INTEGER,

@@ -11,16 +11,18 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      this.Team = this.belongsTo(models.Team, {
+      this.DotaskTeam = this.belongsTo(models.Team, {
         foreignKey: 'teamId',
-        as: 'task'
+        as: 'DotaskTeam'
       });
     }
-  };
+  }
   Task.init({
     teamId: DataTypes.INTEGER,
     title: DataTypes.STRING,
     body: DataTypes.STRING,
+    creatorId: DataTypes.INTEGER,
+    assigneeId: DataTypes.INTEGER,
     status: DataTypes.INTEGER
   }, {
     sequelize,
