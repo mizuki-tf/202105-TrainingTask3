@@ -3,7 +3,7 @@ const Controller = require('./controller');
 const models = require('../models');
 
 class TasksController extends Controller {
-  // GET /creat    
+  // GET /creat
   async create(req, res) {
     const team = await this._team(req);
     res.render('tasks/create', { team });
@@ -44,14 +44,14 @@ class TasksController extends Controller {
       await models.Task.update({
         title: req.body.title,
         body: req.body.body
-      }, { 
+      }, {
         where: { id: task.id }
       });
       await req.flash('info', '更新しました');
       res.redirect(`/teams/${req.params.team}`);
     } catch (err) {
       if (err instanceof ValidationError) {
-        res.render(`/teams/${req.params.team}/${task.id}/edit`, { err: err });
+        res.render(`/teams/${req.params.team}/edit`, { err });
       } else {
         throw err;
       }
@@ -64,7 +64,7 @@ class TasksController extends Controller {
       throw new Error('User not find');
     }
     return team;
-    
+
   }
 
   async _task(req) {

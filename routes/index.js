@@ -15,12 +15,17 @@ route.put('/user', forceLogin, 'users_controller@update');
 
 // /teams/:team/tasksのURL階層の作成。子ルート
 const teamRoute = route.sub('/teams/:team', forceLogin);
-teamRoute.resource('tasks', { controller: 'tasks_controller', only: ['create', 'store', 'edit', 'update'] });
+teamRoute.resource('tasks', { controller: 'tasks_controller', only: [ 'create', 'store', 'edit', 'update' ] });
+
+// /team/:team/membersのURL階層の作成。
+const memberRoute = route.sub('/teams/:team', forceLogin);
+memberRoute.resource('members', { controller: 'members_controller', only: [ 'index', 'store' ] });
 
 // resource style
 route.resource('examples', 'examples_controller');
-//teamsのルート設定
-route.resource('teams', { controller: 'teams_controller', only: ['create', 'store', 'show', 'edit', 'update'] });
+
+//teamsのルーティング
+route.resource('teams', { controller: 'teams_controller', only: [ 'create', 'store', 'show', 'edit', 'update' ] });
 
 // /adminのURL階層の作成。ログインチェック、管理者チェックが有効。
 const adminRoute = route.sub('/admin', forceLogin, forceAdmin);
