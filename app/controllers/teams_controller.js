@@ -6,7 +6,7 @@ const moment = require('moment-timezone');
 
 class TeamsController extends Controller {
 
-  // GET /creat    
+  // GET /creat
   async create(req, res) {
     res.render('teams/create');
   }
@@ -33,10 +33,6 @@ class TeamsController extends Controller {
   async show(req, res) {
     const team = await this._team(req);
     const tasks = await team.getTeamTask({ order : [['id', 'ASC']] });
-    //日付を YYYY/MM/DD HH:mm の形に整える
-    await tasks.forEach((task) => {
-      task.formattedCreatedAt = moment(task.createdAt).tz('Asia/Tokyo').format('YYYY/MM/DD HH:mm');
-    });
     res.render('teams/show', { team, tasks });
   }
 
@@ -72,7 +68,7 @@ class TeamsController extends Controller {
       throw new Error('User not find');
     }
     return team;
-    
+
   }
   async _task(req) {
     console.log(req.params.task);
