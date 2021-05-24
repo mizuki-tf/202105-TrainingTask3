@@ -5,14 +5,9 @@ const managebleTeam = require('../app/middlewares/manageble_team');
 
 const route = new Route();
 
-// function style
-//route.get('/', function (req, res, _next) {
-//  res.render('index');
-//});
-
 // topページのルート設定
 route.get('/', forceLogin, 'top_controller@show');
-route.get('/tasks/:task', forceLogin, 'tasks_controller@show')
+route.get('/tasks/:task', forceLogin, 'tasks_controller@show');
 
 // single style
 route.get('/user/edit', forceLogin, 'users_controller@edit');
