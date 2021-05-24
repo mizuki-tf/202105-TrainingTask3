@@ -2,3 +2,22 @@ extends ./layout
 
 block content
   a(href="/teams/create") チーム作成
+
+  h2 所属しているチーム
+  table(border="1")
+    tbody
+      th チームID
+      th 名前
+      th 役割
+      th 作成日時
+      th 操作
+
+      each team in teams
+        tr
+          td= team.id
+          td= team.name
+          if team.ownerId === req.user.id
+            td マネージャー
+          else
+            td 一般ユーザー
+
