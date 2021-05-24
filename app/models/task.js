@@ -13,7 +13,15 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       this.Team = this.belongsTo(models.Team, {
         foreignKey: 'teamId',
-        as: 'Team'
+        as: 'team'
+      });
+      this.AssignUser = this.belongsTo(models.User, {
+        foreignKey: 'assigneeId',
+        as: 'assignUser'
+      });
+      this.Creator = this.belongsTo(models.User, {
+        foreignKey: 'creatorId',
+        as: 'creator'
       });
     }
   }
