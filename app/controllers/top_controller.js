@@ -1,4 +1,3 @@
-const { ValidationError } = require('sequelize');
 const Controller = require('./controller');
 const models = require('../models');
 
@@ -7,8 +6,7 @@ class TopController extends Controller {
   async show(req, res) {
     const user = await models.User.findByPk(req.user.id);
     const teams = await user.getMembers({ include: 'teamInfo' });
-    const assignTasks = await models.Task.findAll({ include: 'team', where: { assigneeId: req.user.id } })
-    //console.log(JSON.stringify(teams));
+    const assignTasks = await models.Task.findAll({ include: 'team', where: { assigneeId: req.user.id } });
     res.render('index', { teams: teams, user: user, assignTasks: assignTasks } );
   }
 

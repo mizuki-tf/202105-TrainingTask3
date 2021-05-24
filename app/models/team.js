@@ -24,6 +24,10 @@ module.exports = (sequelize, DataTypes) => {
         as: 'member'
       });
     }
+
+    static createWithOwner(user, body) {
+      
+    }
   }
   Team.init({
     name: DataTypes.STRING,
