@@ -34,7 +34,6 @@ class TasksController extends Controller {
 
   // GET /:id/edit
   async edit(req, res) {
-    console.log("成功")
     const team = await this._team(req);
     //チームに結びついたタスクの内、urlの:taskのIdを使って一つのタスクに絞り込む
     const tasks = await team.getTeamTask({ where: { id: req.params.task } });

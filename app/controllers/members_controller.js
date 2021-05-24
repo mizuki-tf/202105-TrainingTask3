@@ -14,11 +14,11 @@ class MembersController extends Controller {
       await req.flash('info', '保存しました');
       res.redirect(`/teams/${req.params.team}/members`);
     } catch (err) {
-      if (err instanceof ValidationError) {　
+      if (err instanceof ValidationError) {
         res.render('teams/create', { err: err });
-      } else {
+    } else {
         throw err;
-      }
+    }
    }
   }
 
