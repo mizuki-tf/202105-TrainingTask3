@@ -16,6 +16,7 @@ class TeamsController extends Controller {
         name: req.body.name,
         ownerId: req.user.id
       });
+      //　メンバーの作成実装予定
       await req.flash('info', '保存しました');
       res.redirect(`/teams/${team.id}`);
     } catch (err) {
