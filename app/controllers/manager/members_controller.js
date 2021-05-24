@@ -16,10 +16,10 @@ class MembersController extends Controller {
     } catch (err) {
       if (err instanceof ValidationError) {
         res.render('manager/teams/create', { err: err });
-    } else {
+      } else {
         throw err;
+      }
     }
-   }
   }
 
   // GET /:id/members
