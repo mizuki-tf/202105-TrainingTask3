@@ -1,13 +1,13 @@
 const { ValidationError } = require('sequelize');
-const Controller = require('./controller');
-const models = require('../models');
+const Controller = require('../controller');
+const models = require('../../models');
 
 class TasksController extends Controller {
   // GET /creat
   async create(req, res) {
     const team = await this._team(req);
     const members = await team.getMember({ include: 'userInfo', order: [['id', 'ASC']] });
-    res.render('tasks/create', { team, members });
+    res.render('manager/tasks/create', { team, members });
   }
 
   // POST /
@@ -22,10 +22,10 @@ class TasksController extends Controller {
         assigneeId: req.body.userId
       });
       await req.flash('info', '保存しました');
-      res.redirect(`/teams/${team.id}`);
+      res.redirect(`/manager/teams/${team.id}`);
     } catch (err) {
       if(err instanceof ValidationError){
-        res.render('tasks/create', { err: err });
+        res.render('manager/tasks/create', { err: err });
       } else {
         throw err;
       }
@@ -34,11 +34,12 @@ class TasksController extends Controller {
 
   // GET /:id/edit
   async edit(req, res) {
+    console.log("成功")
     const team = await this._team(req);
     //チームに結びついたタスクの内、urlの:taskのIdを使って一つのタスクに絞り込む
     const tasks = await team.getTeamTask({ where: { id: req.params.task } });
     const members = await team.getMember({ include: 'userInfo', order: [['id', 'ASC']] });
-    res.render('tasks/edit', { team, task: tasks[0], members });
+    res.render('manager/tasks/edit', { team, task: tasks[0], members });
   }
 
   // PUT or PATCH /:id
@@ -54,10 +55,10 @@ class TasksController extends Controller {
         where: { id: task.id }
       });
       await req.flash('info', '更新しました');
-      res.redirect(`/teams/${req.params.team}`);
+      res.redirect(`/manager/teams/${req.params.team}`);
     } catch (err) {
       if (err instanceof ValidationError) {
-        res.render(`/teams/${req.params.team}/edit`, { err });
+        res.render(`manager/teams/${req.params.team}/edit`, { err });
       } else {
         throw err;
       }

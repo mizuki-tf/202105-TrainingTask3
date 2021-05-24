@@ -1,9 +1,9 @@
-extends ../layout
+extends ../../layout
 
 block content
   h1 タスクの編集
 
-  form.box(action=`/teams/${team.id}/tasks/${task.id}`,method="post")
+  form.box(action=`/manager/teams/${team.id}/tasks/${task.id}`,method="post")
     _csrf
     _method put
 
@@ -19,6 +19,8 @@ block content
         option(value=0) なし
         each member in members
           if member.userInfo.id === task.assigneeId
-          option(value=member.userInfo.id)= member.userInfo.displayName
+            option(value=member.userInfo.id, selected=true)= member.userInfo.displayName
+          else
+            option(value=member.userInfo.id)= member.userInfo.displayName
     div.actions
       input(type="submit")

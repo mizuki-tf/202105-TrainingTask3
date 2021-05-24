@@ -1,6 +1,6 @@
 const { ValidationError } = require('sequelize');
-const Controller = require('./controller');
-const models = require('../models');
+const Controller = require('../controller');
+const models = require('../../models');
 
 class MembersController extends Controller {
 
@@ -12,10 +12,10 @@ class MembersController extends Controller {
         userId: req.body.userId
       });
       await req.flash('info', '保存しました');
-      res.redirect(`/teams/${req.params.team}/members`);
+      res.redirect(`/manager/teams/${req.params.team}/members`);
     } catch (err) {
       if (err instanceof ValidationError) {　
-        res.render('teams/create', { err: err });
+        res.render('manager/teams/create', { err: err });
       } else {
         throw err;
       }
@@ -30,7 +30,7 @@ class MembersController extends Controller {
     //チームに結びついたメンバーを持ってくる
     const members = await team.getMember({ include: 'userInfo', order: [['id', 'ASC']] });
     //console.log(users);
-    res.render('members/index', { users, team, members });
+    res.render('manager/members/index', { users, team, members });
   }
 
   async _team(req) {
