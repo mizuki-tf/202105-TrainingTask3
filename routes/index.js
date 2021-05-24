@@ -13,24 +13,17 @@ route.get('/', function (req, res, _next) {
 route.get('/user/edit', forceLogin, 'users_controller@edit');
 route.put('/user', forceLogin, 'users_controller@update');
 
-// /teams/:team/tasksのURL階層の作成。子ルート
-const teamRoute = route.sub('/teams/:team', forceLogin);
-teamRoute.resource('tasks', { controller: 'tasks_controller', only: [ 'create', 'store', 'edit', 'update' ] });
-
-// /team/:team/membersのURL階層の作成。
-const memberRoute = route.sub('/teams/:team', forceLogin);
-memberRoute.resource('members', { controller: 'members_controller', only: [ 'index', 'store' ] });
-
-// resource style
-route.resource('examples', 'examples_controller');
-
-//teamsのルーティング
-route.resource('teams', { controller: 'teams_controller', only: [ 'create', 'store', 'show', 'edit', 'update' ] });
-
 // /adminのURL階層の作成。ログインチェック、管理者チェックが有効。
 const adminRoute = route.sub('/admin', forceLogin, forceAdmin);
-adminRoute.resource('users', 'admin/users_controller');
+adminRoute.resource('/users', 'admin/users_controller');
 
+// managerのURL階層の作成
+route.resource('teams', { controller: 'teams_controller', only: [ 'create', 'store' ] });
+
+route.resource('manager/teams', forceLogin, { controller: 'manager/teams_controller', only: [ 'show', 'edit', 'update' ] });
+const managerTeamRoute = route.sub('/manager/teams/:team', forceLogin);
+managerTeamRoute.resource('/tasks', { controller: 'manager/tasks_controller', only: [ 'create', 'store', 'edit', 'update' ] });
+managerTeamRoute.resource('/members', { controller: 'manager/members_controller', only: [ 'index', 'store' ] });
 
 
 module.exports = route.router;

@@ -1,9 +1,9 @@
-extends ../layout
+extends ../../layout
 
 block content
   h1 タスクの編集
 
-  form.box(action=`/teams/${team.id}/tasks/${task.id}`,method="post")
+  form.box(action=`/manager/teams/${team.id}/tasks/${task.id}`,method="post")
     _csrf
     _method put
 
