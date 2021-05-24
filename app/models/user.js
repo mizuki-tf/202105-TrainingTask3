@@ -19,14 +19,6 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'ownerId',
         as: 'ownTeams'
       });
-      this.AssignTasks = this.hasMany(models.Task, {
-        foreignKey: 'assigneeId',
-        as: 'assignTasks'
-      });
-      this.CreateTasks = this.hasMany(models.Task, {
-        foreignKey: 'creatorId',
-        as: 'createTasks'
-      });
     }
 
     static async signIn(params) {

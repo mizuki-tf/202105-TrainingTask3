@@ -14,12 +14,12 @@ class MembersController extends Controller {
       await req.flash('info', '保存しました');
       res.redirect(`/manager/teams/${req.params.team}/members`);
     } catch (err) {
-      if (err instanceof ValidationError) {　
+      if (err instanceof ValidationError) {
         res.render('manager/teams/create', { err: err });
       } else {
         throw err;
       }
-   }
+    }
   }
 
   // GET /:id/members
@@ -29,12 +29,10 @@ class MembersController extends Controller {
     const team = await this._team(req);
     //チームに結びついたメンバーを持ってくる
     const members = await team.getMember({ include: 'userInfo', order: [['id', 'ASC']] });
-    //console.log(users);
     res.render('manager/members/index', { users, team, members });
   }
 
   async _team(req) {
-    //console.log(req.params.team);
     const team = await models.Team.findByPk(req.params.team);
     if (!team) {
       throw new Error('User not find');

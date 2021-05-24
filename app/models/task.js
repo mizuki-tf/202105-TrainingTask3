@@ -15,9 +15,9 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'teamId',
         as: 'team'
       });
-      this.AssignUser = this.belongsTo(models.User, {
+      this.Assignee = this.belongsTo(models.User, {
         foreignKey: 'assigneeId',
-        as: 'assignUser'
+        as: 'assignee'
       });
       this.Creator = this.belongsTo(models.User, {
         foreignKey: 'creatorId',
