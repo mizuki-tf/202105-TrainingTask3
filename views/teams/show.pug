@@ -12,12 +12,14 @@ block content
     tbody
       th タスクID
       th タイトル
+      th 担当者
       th 作成日時
       th 操作
       each task in tasks
         tr
           td= task.id
           td= task.title
+          td= task.assigneeId
           td= helpers.formatDateTime(task.createdAt)
           td
             a(href=`/teams/${team.id}/tasks/${task.id}/edit`) 編集

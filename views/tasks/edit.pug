@@ -1,6 +1,6 @@
 extends ../layout
 
-block content 
+block content
   h1 タスクの編集
 
   form.box(action=`/teams/${team.id}/tasks/${task.id}`,method="post")
@@ -10,8 +10,14 @@ block content
     div
       label(for="title") タイトル
       input#title(name="title",value=task.title)
-    div  
+    div
       label(for="body") 内容
       textarea#body(name="body")=task.body
+    div
+      label(for="userId") 担当者
+      select(name="userId")
+        option(value=0) なし
+        each member in members
+          option(value=member.userInfo.id, selected=member.userInfo.id === task.assigneeId)= member.userInfo.displayName
     div.actions
-      input(type="submit") 
+      input(type="submit")

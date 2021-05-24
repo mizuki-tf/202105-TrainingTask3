@@ -52,7 +52,7 @@ class TeamsController extends Controller {
       res.redirect(`/teams/${req.params.team}/edit`);
     } catch (err) {
       if (err instanceof ValidationError) {
-        res.render(`/teams/${req.params.team}/edit`, { err: err });
+        res.render(`/teams/${req.params.team}/edit`, { err });
       } else {
         throw err;
       }

@@ -29,12 +29,10 @@ class MembersController extends Controller {
     const team = await this._team(req);
     //チームに結びついたメンバーを持ってくる
     const members = await team.getMember({ include: 'userInfo', order: [['id', 'ASC']] });
-    console.log(JSON.stringify(members));
     res.render('members/index', { users, team, members });
   }
 
   async _team(req) {
-    //console.log(req.params.team);
     const team = await models.Team.findByPk(req.params.team);
     if (!team) {
       throw new Error('User not find');

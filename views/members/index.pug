@@ -1,6 +1,6 @@
 extends ../layout
 
-block content 
+block content
   h2 新メンバー追加
 
   form(action=`/teams/${team.id}/members`,method="post")
@@ -13,7 +13,7 @@ block content
 
   h2 メンバー一覧
   table(border="1")
-    tbody 
+    tbody
       th 役割
       th 名前
 
