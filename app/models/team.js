@@ -25,14 +25,18 @@ module.exports = (sequelize, DataTypes) => {
       });
     }
 
-    static createWithOwner(user, body) {
+    // チーム作成及びチーム作成者を担当者としてメンバー登録
+    static async createWithOwner(user, body) {
       const team = await this.create({
         name: body.name,
         ownerId: user.id
       });
       team.createMember({
         teamId: team.id,
-      })
+        userId: user.id,
+        role: 1
+      });
+      return team;
     }
   }
   Team.init({
