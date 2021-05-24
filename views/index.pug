@@ -20,4 +20,8 @@ block content
             td マネージャー
           else
             td 一般ユーザー
+          td= helpers.formatDateTime(team.createdAt)
+          if team.ownerId === req.user.id
+            td
+              a(href=``)
 
