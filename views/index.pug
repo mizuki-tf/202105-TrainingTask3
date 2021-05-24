@@ -14,14 +14,16 @@ block content
 
       each team in teams
         tr
-          td= team.id
-          td= team.name
-          if team.ownerId === req.user.id
+          td= team.teamInfo.id
+          td= team.teamInfo.name
+          if team.teamInfo.ownerId === user.id
             td マネージャー
           else
             td 一般ユーザー
-          td= helpers.formatDateTime(team.createdAt)
-          if team.ownerId === req.user.id
+          td= helpers.formatDateTime(team.teamInfo.createdAt)
+          if team.teamInfo.ownerId === user.id
             td
-              a(href=``)
+              a(href=`/manager/teams/${team.id}`) 管理
+          else
+            td
 
