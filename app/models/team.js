@@ -26,7 +26,13 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     static createWithOwner(user, body) {
-      
+      const team = await this.create({
+        name: body.name,
+        ownerId: user.id
+      });
+      team.createMember({
+        teamId: team.id,
+      })
     }
   }
   Team.init({
