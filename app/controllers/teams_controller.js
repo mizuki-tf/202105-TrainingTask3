@@ -17,6 +17,12 @@ class TeamsController extends Controller {
         ownerId: req.user.id
       });
 
+      await models.Member.create({
+        teamId: team.id,
+        userId: req.user.id,
+        role: 1
+      });
+
       await req.flash('info', '保存しました');
       res.redirect(`manager/teams/${team.id}`);
 

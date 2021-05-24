@@ -2,3 +2,49 @@ extends ./layout
 
 block content
   a(href="/teams/create") チーム作成
+
+  h2 アサインされているタスク
+  table(border="1")
+    tbody
+      th チーム
+      th タスクID
+      th タイトル
+      th 担当者
+      th 作成日時
+      th 操作
+
+      each assignTask in assignTasks
+        tr
+          td= assignTask.team.name
+          td= assignTask.id
+          td= assignTask.title
+          td= assignTask.assigneeId
+          td= assignTask.creatorId
+          td
+            a(href=`/tasks/${assignTask.id}`) 詳細
+
+
+  h2 所属しているチーム
+  table(border="1")
+    tbody
+      th チームID
+      th 名前
+      th 役割
+      th 作成日時
+      th 操作
+
+      each team in teams
+        tr
+          td= team.teamInfo.id
+          td= team.teamInfo.name
+          if team.teamInfo.ownerId === user.id
+            td マネージャー
+          else
+            td 一般ユーザー
+          td= helpers.formatDateTime(team.teamInfo.createdAt)
+          if team.teamInfo.ownerId === user.id
+            td
+              a(href=`/manager/teams/${team.id}`) 管理
+          else
+            td
+
