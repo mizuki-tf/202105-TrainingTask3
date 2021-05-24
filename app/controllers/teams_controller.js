@@ -35,40 +35,7 @@ class TeamsController extends Controller {
     }
   }
 
-  // GET /:id
-  async show(req, res) {
-    const team = await this._team(req);
-    const tasks = await team.getTeamTask({ order : [['id', 'ASC']] });
-    res.render('teams/show', { team, tasks });
-  }
-
-  // GET /:id/edit
-  async edit(req, res) {
-    const team = await this._team(req);
-    res.render('teams/edit', { team });
-  }
-
-  // PUT or PATCH /:id
-  async update(req, res) {
-    const team = await this._team(req);
-    try {
-      await models.Team.update(
-        { name: req.body.name },
-        { where: { id: team.id } }
-      );
-      await req.flash('info', '更新しました');
-      res.redirect(`/teams/${req.params.team}/edit`);
-    } catch (err) {
-      if (err instanceof ValidationError) {
-        res.render(`/teams/${req.params.team}/edit`, { err });
-      } else {
-        throw err;
-      }
-    }
-  }
-
   async _team(req) {
-    //console.log(req.params.team)
     const team = await models.Team.findByPk(req.params.team);
     if (!team) {
       throw new Error('User not find');

@@ -1,6 +1,6 @@
 const { ValidationError } = require('sequelize');
-const Controller = require('./controller');
-const models = require('../models');
+const Controller = require('../controller');
+const models = require('../../models');
 
 class MembersController extends Controller {
 
@@ -12,10 +12,10 @@ class MembersController extends Controller {
         userId: req.body.userId
       });
       await req.flash('info', '保存しました');
-      res.redirect(`/teams/${req.params.team}/members`);
+      res.redirect(`/manager/teams/${req.params.team}/members`);
     } catch (err) {
       if (err instanceof ValidationError) {
-        res.render('teams/create', { err: err });
+        res.render('manager/teams/create', { err: err });
       } else {
         throw err;
       }
@@ -29,10 +29,12 @@ class MembersController extends Controller {
     const team = await this._team(req);
     //チームに結びついたメンバーを持ってくる
     const members = await team.getMember({ include: 'userInfo', order: [['id', 'ASC']] });
-    res.render('members/index', { users, team, members });
+    //console.log(users);
+    res.render('manager/members/index', { users, team, members });
   }
 
   async _team(req) {
+    //console.log(req.params.team);
     const team = await models.Team.findByPk(req.params.team);
     if (!team) {
       throw new Error('User not find');
