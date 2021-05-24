@@ -18,9 +18,6 @@ block content
       select(name="userId")
         option(value=0) なし
         each member in members
-          if member.userInfo.id === task.assigneeId
-            option(value=member.userInfo.id, selected=true)= member.userInfo.displayName
-          else
-            option(value=member.User.id)= member.User.displayName
+          option(value=member.userInfo.id, selected=member.userInfo.id === task.assigneeId)= member.userInfo.displayName
     div.actions
       input(type="submit")
