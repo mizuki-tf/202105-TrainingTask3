@@ -33,7 +33,6 @@ class MembersController extends Controller {
   }
 
   async _team(req) {
-    //console.log(req.params.team);
     const team = await models.Team.findByPk(req.params.team);
     if (!team) {
       throw new Error('User not find');
