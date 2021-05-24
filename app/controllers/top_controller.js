@@ -3,7 +3,7 @@ const models = require('../models');
 
 class TopController extends Controller {
   //GET /
-  async show(req, res) {
+  async index(req, res) {
     const user = await models.User.findByPk(req.user.id);
     const teams = await user.getMembers({ include: 'teamInfo' });
     const assignTasks = await models.Task.findAll({ include: 'team', where: { assigneeId: req.user.id } });
