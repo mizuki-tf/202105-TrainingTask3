@@ -13,7 +13,7 @@ module.exports = {
       references: { model: 'Users', key: 'id' }
     });
   },
-  down: async (queryInterface, Sequelize) => {
+  down: async (queryInterface, _Sequelize) => {
     await queryInterface.removeColumn('Tasks', 'creatorId');
     await queryInterface.removeColumn('Tasks', 'assigneeId');
   }
