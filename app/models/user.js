@@ -19,6 +19,10 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'ownerId',
         as: 'ownTeams'
       });
+      this.UserComment = this.hasMany(models.Comment, {
+        foreignKey: 'creatorId',
+        as: 'userComments'
+      });
     }
 
     static async signIn(params) {

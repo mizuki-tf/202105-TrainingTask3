@@ -8,13 +8,18 @@ block content
   span= task.body
 
   h2 コメント
+  ul
+    each comment in comments
+      li #{comment.message}
+      |  #{helpers.formatDateTime(comment.createdAt)} #{comment.user.displayName}
   form(action=`/tasks/${task.id}/comments`, method="post")
     _csrf
-    div メッセージ
+
+    div
+      p メッセージ
     div
       textarea(name="comment")
+    label 完了報告
+      input(name="status" type="checkbox" value=1)
     div.actions
       input(type="submit")
-
-    label
-      input(type='checkbox')

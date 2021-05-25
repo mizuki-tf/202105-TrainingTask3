@@ -23,20 +23,34 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'creatorId',
         as: 'creator'
       });
+      this.TaskComments = this.hasMany(models.Comment, {
+        foreignKey: 'taskId',
+        as: 'taskComments'
+      });
+
     }
 
     // Commentの作成
-    static async createCommnet(user, body) {
+    static async finish(user, body, task) {
       const comment = await this.create({
+        taskId: task.id,
+        creatorId: user.id,
         message: body.comment,
-        : user.id
+        kind: 1
       });
-      team.createMember({
-        teamId: team.id,
-        userId: user.id,
-        role: 1
+      task.update({
+        status: 1
+      })
+      return comment;
+    }
+    static async createComment(user, body, task) {
+      const comment = await this.create({
+        taskId: task.id,
+        creatorId: user.id,
+        message: body.comment,
+        kind: 0
       });
-      return team;
+      return comment;
     }
 
   }
