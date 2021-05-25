@@ -5,5 +5,16 @@ block content
     | #{task.team.name} / #{task.title}
 
   h2 内容
-
   span= task.body
+
+  h2 コメント
+  form(action=`/tasks/${task.id}/comments`, method="post")
+    _csrf
+    div メッセージ
+    div
+      textarea(name="comment")
+    div.actions
+      input(type="submit")
+
+    label
+      input(type='checkbox')

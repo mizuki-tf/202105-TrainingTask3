@@ -24,6 +24,21 @@ module.exports = (sequelize, DataTypes) => {
         as: 'creator'
       });
     }
+
+    // Commentの作成
+    static async createCommnet(user, body) {
+      const comment = await this.create({
+        message: body.comment,
+        : user.id
+      });
+      team.createMember({
+        teamId: team.id,
+        userId: user.id,
+        role: 1
+      });
+      return team;
+    }
+
   }
   Task.init({
     teamId: DataTypes.INTEGER,

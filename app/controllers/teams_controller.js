@@ -14,7 +14,7 @@ class TeamsController extends Controller {
     try {
       const team = await models.Team.createWithOwner(req.user, req.body);
       await req.flash('info', `新規チーム${team.name}を作成しました`);
-      res.redirect(`manager/teams/${team.id}`);
+      res.redirect(`/manager/teams/${team.id}`);
     } catch (err) {
       if(err instanceof ValidationError){
         res.render('teams/create', { err: err });
