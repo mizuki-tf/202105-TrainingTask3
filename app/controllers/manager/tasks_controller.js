@@ -25,7 +25,9 @@ class TasksController extends Controller {
       res.redirect(`/manager/teams/${team.id}`);
     } catch (err) {
       if(err instanceof ValidationError){
-        res.render('manager/tasks/create', { err: err });
+        const team = await this._team(req);
+        const members = await team.getMember({ include: 'userInfo', order: [['id', 'ASC']] });
+        res.render('manager/tasks/create', { err: err, team: team, members: members });
       } else {
         throw err;
       }
@@ -57,7 +59,11 @@ class TasksController extends Controller {
       res.redirect(`/manager/teams/${req.params.team}`);
     } catch (err) {
       if (err instanceof ValidationError) {
-        res.render(`manager/teams/${req.params.team}/edit`, { err });
+        const team = await this._team(req);
+        //チームに結びついたタスクの内、urlの:taskのIdを使って一つのタスクに絞り込む
+        const tasks = await team.getTeamTask({ where: { id: req.params.task } });
+        const members = await team.getMember({ include: 'userInfo', order: [['id', 'ASC']] });
+        res.render('manager/tasks/edit', { err: err, team: team, task: tasks[0], members: members });
       } else {
         throw err;
       }

@@ -44,7 +44,7 @@ block content
           td= helpers.formatDateTime(team.teamInfo.createdAt)
           if team.teamInfo.ownerId === user.id
             td
-              a(href=`/manager/teams/${team.id}`) 管理
+              a(href=`/manager/teams/${team.teamInfo.id}`) 管理
           else
             td
 

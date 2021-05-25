@@ -6,6 +6,11 @@ block content
   form.box(action=`/manager/teams/${team.id}/tasks`, method="post")
     _csrf
 
+    - if(err)
+      ul.errors
+        each error in err.errors
+          li= error.message
+
     div
       label(for="title") タイトル
       input#title(name="title")

@@ -1,11 +1,16 @@
 extends ../layout
 
-block content 
+block content
   h1 チーム作成
+
+  - if(err)
+      ul.errors
+        each error in err.errors
+          li= error.message
 
   form.box(action="/teams", method="post")
     _csrf
-    
+
     div
       label(for="title") チーム名
       input#title(name="name")

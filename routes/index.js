@@ -18,7 +18,7 @@ const adminRoute = route.sub('/admin', forceLogin, forceAdmin);
 adminRoute.resource('/users', 'admin/users_controller');
 
 // managerのURL階層の作成
-route.resource('teams', { controller: 'teams_controller', only: [ 'create', 'store' ] });
+route.resource('/teams', { controller: 'teams_controller', only: [ 'create', 'store' ] });
 
 route.resource('manager/teams', forceLogin, managebleTeam, { controller: 'manager/teams_controller', only: [ 'show', 'edit', 'update' ] });
 const managerTeamRoute = route.sub('/manager/teams/:team', forceLogin, managebleTeam);

@@ -27,8 +27,27 @@ module.exports = (sequelize, DataTypes) => {
   }
   Task.init({
     teamId: DataTypes.INTEGER,
-    title: DataTypes.STRING,
-    body: DataTypes.STRING,
+    title: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          msg: 'タイトルは空ではいけません'
+        },
+        len: {
+          msg: 'タイトルは10文字未満です',
+          args: [0, 10]
+        }
+      }
+    },
+    body: {
+      type: DataTypes.STRING,
+      validate: {
+        len: {
+          msg: '本文は30文字未満です',
+          args: [0, 30]
+        }
+      }
+    },
     creatorId: DataTypes.INTEGER,
     assigneeId: DataTypes.INTEGER,
     status: DataTypes.INTEGER

@@ -29,7 +29,8 @@ class TeamsController extends Controller {
       res.redirect(`/manager/teams/${req.params.team}/edit`);
     } catch (err) {
       if (err instanceof ValidationError) {
-        res.render(`manager/teams/${req.params.team}/edit`, { err });
+        const team = await this._team(req);
+        res.render('manager/teams/edit', { err: err, team: team });
       } else {
         throw err;
       }

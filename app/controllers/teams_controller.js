@@ -17,7 +17,7 @@ class TeamsController extends Controller {
       res.redirect(`manager/teams/${team.id}`);
     } catch (err) {
       if(err instanceof ValidationError){
-        res.render('teams/create', { err });
+        res.render('teams/create', { err: err });
       } else {
         throw err;
       }
