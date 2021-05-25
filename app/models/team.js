@@ -24,6 +24,28 @@ module.exports = (sequelize, DataTypes) => {
         as: 'member'
       });
     }
+
+    // チーム作成及びチーム作成者を担当者としてメンバー登録
+    static async createWithOwner(user, body) {
+      const team = await this.create({
+        name: body.name,
+        ownerId: user.id
+      });
+      team.createMember({
+        teamId: team.id,
+        userId: user.id,
+        role: 1
+      });
+      return team;
+    }
+
+    async isManager(user) {
+      const member = await user.getMembers({
+        where: { teamId: this.id }
+      });
+      const userRole = member[0];
+      return parseInt(userRole.role) === 1;
+    }
   }
   Team.init({
     name: DataTypes.STRING,
