@@ -38,6 +38,15 @@ module.exports = (sequelize, DataTypes) => {
       });
       return team;
     }
+
+    static async isManager(user) {
+      const member = await user.getMembers({
+        where: { teamId: this.id }
+      });
+      const userRole = member[0].role;
+      console.log(JSON.stringify(userRole));
+      return userRole === 1;
+    }
   }
   Team.init({
     name: DataTypes.STRING,
