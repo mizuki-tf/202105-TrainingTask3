@@ -15,7 +15,7 @@ module.exports = async function managebleTeam(req, res, next) {
 
   if (!await team.isManager(user)) {
     await req.flash('alert', 'アクセスできません');
-    res.redirect('/');
+    return res.redirect('/');
   }
   return next();
 };
