@@ -44,11 +44,18 @@ module.exports = (sequelize, DataTypes) => {
         where: { teamId: this.id }
       });
       const userRole = member[0];
-      return parseInt(userRole.role) === 1;
+      return Number(userRole.role) === 1;
     }
   }
   Team.init({
-    name: DataTypes.STRING,
+    name: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          msg: 'チーム名は必須です'
+        }
+      }
+    },
     ownerId: DataTypes.INTEGER
   }, {
     sequelize,
