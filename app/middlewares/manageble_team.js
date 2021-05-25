@@ -10,9 +10,10 @@ module.exports = async function managebleTeam(req, res, next) {
   const manageUser = manageMember[0];
 
   //managerはroleが1になる
-  if (manageUser.userId　=== req.user.id) {
+  if (manageUser.userId === req.user.id) {
     return next();
+  } else {
+    await req.flash('alert', 'アクセスできません');
   }
-  else await req.flash('alert', 'アクセスできません');
   res.redirect('/');
 };
