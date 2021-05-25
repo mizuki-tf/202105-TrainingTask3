@@ -12,7 +12,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         references: { model: 'Tasks', key: 'id' }
       },
-      creatoId: {
+      creatorId: {
         type: Sequelize.INTEGER,
         references: { model: 'Users', key: 'id' }
       },

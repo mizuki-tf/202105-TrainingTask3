@@ -2,7 +2,7 @@ extends ../../layout
 
 block content
   h1
-    | #{task.team.name} / #{task.title}
+    | #{team.name} / #{task.title}
 
   h2 内容
   span= task.body
@@ -17,9 +17,11 @@ block content
 
     div
       p メッセージ
-    div
       textarea(name="comment")
-    label 完了報告
-      input(name="status" type="checkbox" value=1)
+    if (task.status === 0)
+      label 完了報告
+      input(name="status", type="checkbox", value=1)
+    else
+      p 既に送信済みです
     div.actions
       input(type="submit")

@@ -1,21 +1,39 @@
+const { ValidationError } = require("sequelize");
 const Controller = require('./controller');
 const models = require('../models');
 
 class TasksController extends Controller {
   async show(req, res) {
-    const task = await models.Task.findOne({ include: 'team', where: { id: req.params.task } });
-    const comments = await task.getTaskComments({ include: 'user' });
-    res.render('manager/tasks/show', { task: task, comments: comments });
+    const task = await models.Task.findByPk(req.params.task);
+    const team = await task.getTeam();
+    const comments = await task.getTaskComments({
+      include: 'user',
+      order: [["id", "ASC"]]
+    });
+    res.render('manager/tasks/show', { task: task, team: team, comments: comments });
   }
+
   async store(req, res) {
-    const task = await models.Task.findOne({ include: 'team', where: { id: req.params.task } });
-    if (req.body.status === 1) {
-      await models.Comment.finish(req.user, req.body, task);
-    } else {
-      await models.Comment.createTaskComments(req.user, req.body, task);
+    try {
+      if (req.body.status === "1") {
+        const task = await models.Task.findByPk(req.params.task);
+        task.finish(req.user, req.body);
+      } else {
+        await models.Comment.create({
+          taskId: req.params.task,
+          creatorId: req.user.id,
+          message: req.body.comment,
+          kind: 0
+        });
+      }
+      res.redirect(`/tasks/${req.params.task}`);
+    } catch (err) {
+      if(err instanceof ValidationError){
+        res.render('manager/tasks/show', { err: err });
+      } else {
+        throw err;
+      }
     }
-    const comments = await task.getTaskComments({ include: 'user' });
-    res.render('manager/tasks/show', { task: task, comments: comments });
   }
 }
 

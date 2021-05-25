@@ -20,10 +20,10 @@ module.exports = (sequelize, DataTypes) => {
         as: 'user'
       });
     }
-  };
+  }
   Comment.init({
     taskId: DataTypes.INTEGER,
-    creatoId: DataTypes.INTEGER,
+    creatorId: DataTypes.INTEGER,
     message: DataTypes.TEXT,
     kind: DataTypes.INTEGER
   }, {

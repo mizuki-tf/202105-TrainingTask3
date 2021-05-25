@@ -18,8 +18,8 @@ block content
           td= assignTask.team.name
           td= assignTask.id
           td= assignTask.title
-          td= assignTask.
-          td= helpers.formatDateTime()
+          td= user.displayName
+          td= helpers.formatDateTime(assignTask.createdAt)
           td
             a(href=`/tasks/${assignTask.id}`) 詳細
 

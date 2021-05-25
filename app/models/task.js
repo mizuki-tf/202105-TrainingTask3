@@ -31,28 +31,18 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     // Commentの作成
-    static async finish(user, body, task) {
-      const comment = await this.create({
+    async finish(user, body) {
+      const task = await this.update({
+        status: 1
+      });
+      task.createTaskComment({
         taskId: task.id,
         creatorId: user.id,
         message: body.comment,
         kind: 1
       });
-      task.update({
-        status: 1
-      })
-      return comment;
+      //return task;
     }
-    static async createComment(user, body, task) {
-      const comment = await this.create({
-        taskId: task.id,
-        creatorId: user.id,
-        message: body.comment,
-        kind: 0
-      });
-      return comment;
-    }
-
   }
   Task.init({
     teamId: DataTypes.INTEGER,
