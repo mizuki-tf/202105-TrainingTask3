@@ -13,7 +13,7 @@ class TasksController extends Controller {
     res.render('manager/tasks/show', { task: task, team: team, comments: comments });
   }
 
-  async store(req, res) {
+  async comment(req, res) {
     try {
       if (req.body.status === "1") {
         const task = await models.Task.findByPk(req.params.task);
