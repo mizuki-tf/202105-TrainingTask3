@@ -9,6 +9,9 @@ const route = new Route();
 route.get('/', forceLogin, 'top_controller@index');
 route.get('/tasks/:task', forceLogin, 'tasks_controller@show');
 
+// コメントのルート設定
+route.post('/tasks/:task/comments', forceLogin, 'tasks_controller@comment');
+
 // single style
 route.get('/user/edit', forceLogin, 'users_controller@edit');
 route.put('/user', forceLogin, 'users_controller@update');

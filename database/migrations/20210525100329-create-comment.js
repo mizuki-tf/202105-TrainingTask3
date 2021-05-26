@@ -1,27 +1,26 @@
 'use strict';
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('Tasks', {
+    await queryInterface.createTable('Comments', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      teamId: {
+      taskId: {
         type: Sequelize.INTEGER,
-        references: { model: 'Teams', key: 'id' }
+        references: { model: 'Tasks', key: 'id' }
       },
-      title: {
-        allowNull: false,
-        type: Sequelize.STRING
-      },
-      body: {
-        type: Sequelize.STRING
-      },
-      status: {
+      creatorId: {
         type: Sequelize.INTEGER,
-        defaultValue: 0
+        references: { model: 'Users', key: 'id' }
+      },
+      message: {
+        type: Sequelize.TEXT
+      },
+      kind: {
+        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,
@@ -34,6 +33,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, _Sequelize) => {
-    await queryInterface.dropTable('Tasks');
+    await queryInterface.dropTable('Comments');
   }
 };

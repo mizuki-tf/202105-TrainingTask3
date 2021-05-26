@@ -2,8 +2,26 @@ extends ../../layout
 
 block content
   h1
-    | #{task.team.name} / #{task.title}
+    | #{team.name} / #{task.title}
 
   h2 内容
-
   span= task.body
+
+  h2 コメント
+  ul
+    each comment in comments
+      li #{comment.message}
+      |  #{helpers.formatDateTime(comment.createdAt)} #{comment.user.displayName}
+  form(action=`/tasks/${task.id}/comments`, method="post")
+    _csrf
+
+    div
+      p メッセージ
+      textarea(name="comment")
+    if (task.status === 0)
+      label 完了報告
+      input(name="status", type="checkbox", value=1)
+    else
+      p 既に送信済みです
+    div.actions
+      input(type="submit")
